@@ -13,4 +13,6 @@ int main(){
         printf("Version: %s\n", info.version);
         printf("Machine: %s\n", info.machine);
     }
+
+    return 0;
 }

@@ -9,5 +9,6 @@ int main(){
 		fprintf(stderr, "ERRNO: %d\n", errno);
 		fprintf(stderr, "Error string: %s\n", strerror(errno));	 
 	}
-   	return 1;
+
+   	return 0;
 }

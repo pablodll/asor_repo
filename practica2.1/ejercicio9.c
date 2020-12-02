@@ -6,5 +6,5 @@ int main(){
     printf("UID real: %d\n", getuid());
     printf("UID efectivo: %d\n", geteuid());
     
-    return 1;
+    return 0;
 }

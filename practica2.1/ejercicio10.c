@@ -12,5 +12,5 @@ int main(){
     printf("Descripcion usuario: %s\n", info->pw_name);
     printf("Directorio home: %s\n", info->pw_dir);
     
-    return 1;
+    return 0;
 }

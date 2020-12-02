@@ -9,5 +9,5 @@ int main(){
    	fprintf(stderr, "Error %d: %s\n", i, strerror(i));	
    }
    
-   return 1;
+   return 0;
 }

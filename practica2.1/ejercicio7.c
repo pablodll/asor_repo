@@ -10,4 +10,6 @@ int main(){
 
     long name_max = pathconf("./", _PC_NAME_MAX);
     printf("Numero maximo de ficheros abiertos: %d\n", name_max);
+
+    return 0;
 }

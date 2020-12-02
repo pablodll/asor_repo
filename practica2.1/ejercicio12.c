@@ -11,5 +11,5 @@ int main(){
         printf("%d\n", t);
     }
     
-    return 1;
+    return 0;
 }

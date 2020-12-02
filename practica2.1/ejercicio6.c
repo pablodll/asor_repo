@@ -10,4 +10,6 @@ int main(){
 
     long open_max = sysconf(_SC_OPEN_MAX);
     printf("Numero maximo de ficheros abiertos: %d\n", open_max);
+
+    return 0;
 }

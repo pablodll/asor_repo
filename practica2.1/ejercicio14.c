@@ -17,4 +17,6 @@ int main(){
             perror("ERROR");
         }
     }
+
+    return 0;
 }
