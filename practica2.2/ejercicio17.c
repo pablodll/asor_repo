@@ -3,11 +3,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <string.h>
 
 int main(int argc, char *argv[]){
     struct stat st;
     struct dirent *dp;
-    int size = 0;
+    float size = 0;
 
     if(argc <= 1){
         fprintf(stderr, "Missing argument\n");
@@ -21,40 +22,44 @@ int main(int argc, char *argv[]){
     if(S_ISDIR(st.st_mode)){
         DIR *dir = opendir(argv[1]);
 
-        if(dir = NULL){
+        if(dir == NULL){
             perror("opendir error");
         }
         else{
-            dp = readdir(dir);
-            // while(dp != NULL){
+            while(dp = readdir(dir)) { // != NULL
+                char s[100];
+                strcpy(s, argv[1]);
+                strcat(s, "/");
+                strcat(s, dp->d_name);
 
-            //     // if(lstat(dp->d_name, &st) == -1){
-            //     //     perror("lstat error");
-            //     // }
-            //     // else{
-            //     //     if(S_ISREG(st.st_mode)) { 
-            //     //         printf("%s", dp->d_name); 
-            //     //         size = size + st.st_size;
-            //     //     }
-            //     //     else if(S_ISDIR(st.st_mode)) { 
-            //     //         printf("%s/", dp->d_name); 
-            //     //     }
-            //     //     else if(S_ISLNK(st.st_mode)) { 
-            //     //         char *b;
-            //     //         if(readlink(dp->d_name, b, st.st_size) == -1){
-            //     //             perror("readlink error");
-            //     //         }
-            //     //         printf("%s -> %s", dp->d_name, b); 
-            //     //         size = size + st.st_size;
-            //     //     }
-            //         // else if(S_IXUSR(st.st_mode)){
-            //         //     printf("%s*", dp->d_name); 
-            //         //     size = size + st.st_size;
-            //         // }
-            //     }
-            // }
+                if(lstat(s, &st) == -1){
+                    perror("lstat error");
+                }
+                else{
+                    if(S_ISDIR(st.st_mode)) { 
+                        printf("%s/\n", dp->d_name); 
+                    }
+                    else if(S_ISREG(st.st_mode)) { 
+                        if(st.st_mode & S_IXUSR){
+                            printf("%s*\n", dp->d_name); 
+                        }
+                        else{
+                            printf("%s\n", dp->d_name); 
+                        }
+                        size = size + st.st_size;
+                    }
+                    else if(S_ISLNK(st.st_mode)) { 
+                        char b[50];
+                        if(readlink(s, b, 100) == -1){
+                            perror("readlink error");
+                        }
+                        printf("%s -> %s\n", dp->d_name, b); 
+                        size = size + st.st_size;
+                    }
+                }
+            }
 
-            printf("Files size: %d Kb\n", size/1000);
+            printf("Files size: %f Kb\n", size/1000);
         }
 
     }
