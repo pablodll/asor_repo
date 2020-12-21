@@ -24,14 +24,9 @@ int main(){
             break;
     }
 
-    if(max = sched_get_priority_max(policy) == -1){
-        perror("get_priority_max error");
-    }
-    if(min = sched_get_priority_min(policy) == -1){
-        perror("get_priority_min error");
-    }
-
-    printf("Max: %d, Min: %d\n", max, min);
+    max = sched_get_priority_max(policy);
+    min = sched_get_priority_min(policy);
+    printf("Min: %d, Max: %d\n", min, max);
 
     return 0;
 }
