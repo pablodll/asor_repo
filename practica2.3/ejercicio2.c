@@ -4,6 +4,7 @@
 
 int main(){
     int max, min, policy;
+    struct sched_param *p;
 
     policy = sched_getscheduler(0);
 
@@ -24,8 +25,19 @@ int main(){
             break;
     }
 
+    if(sched_getparam(0, p) == -1) { 
+        perror("getparam error"); 
+    }
+    printf("Prioridad: %d\n", p->__sched_priority);
+
     max = sched_get_priority_max(policy);
+    if(max == -1){
+        perror("get max error");
+    }
     min = sched_get_priority_min(policy);
+    if(min == -1){
+        perror("get min error");
+    }
     printf("Min: %d, Max: %d\n", min, max);
 
     return 0;
