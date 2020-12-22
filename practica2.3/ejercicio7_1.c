@@ -23,8 +23,9 @@ int main(int argc, char *argv[]){
         if(wait(&stat) == -1){
             perror("wait error");
         }
-        else{
-            printf("El comando temino de ejecutarse\n");
+        
+        if(WIFEXITED(stat) && WEXITSTATUS(stat) == 0){
+            printf("El comando termino de ejecutarse\n"); 
         }
     }
 
