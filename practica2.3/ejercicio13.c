@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
         perror("sigaction SIGALRM error");
     }
 
-    alarm(10);
+    alarm(atoi(argv[1]));
 
     sigsuspend(&set);
 
