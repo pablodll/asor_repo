@@ -14,8 +14,6 @@ int main(int argc, char *argv[]){
         _exit(0);
     }
 
-    printf("%d\n", sizeof(argv[1]));
-
     if(write(pipe, argv[1], strlen(argv[1])) == -1){
         perror("write error");
     }
