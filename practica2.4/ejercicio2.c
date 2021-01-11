@@ -17,8 +17,11 @@ int main(int argc, char *argv[]){
     pid_t pid = fork();
 
     if(pid == 0){ // HIJO
+        if(close(p_h[1]) == -1 || close(h_p[0]) == -1){
+            perror("Child close error");
+        }
+        
         int i = 0;
-
         while(i < 10){
             char s[100];
 
@@ -45,6 +48,10 @@ int main(int argc, char *argv[]){
 
     }
     else if(pid > 0){ // PADRE
+        if(close(p_h[0]) == -1 || close(h_p[1]) == -1){
+            perror("Child close error");
+        }
+
         char c[1] = "";
 
         while(1){
