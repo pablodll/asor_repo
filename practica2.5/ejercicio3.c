@@ -6,10 +6,6 @@
 #include <sys/types.h>
 #include <locale.h>
 
-#include <errno.h>
-
-extern int errno;
-
 #define NI_MAXHOST 1025
 #define NI_MAXSERV 32
 

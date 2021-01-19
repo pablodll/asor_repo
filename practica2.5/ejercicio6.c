@@ -5,6 +5,9 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
+#define NI_MAXHOST 1025
+#define NI_MAXSERV 32
+
 int main(int argc, char *argv[]){
 
     char buf[100];
