@@ -130,5 +130,9 @@ int main(int argc, char *argv[]){
         wait(&pid_list[i]);
     }
 
+    if(close(sd) == -1){
+        perror("Error close()");
+    }
+
     return 0;
 }

@@ -60,5 +60,9 @@ int main(int argc, char *argv[]){
 
     printf("%s\n%", buf);
 
+    if(close(sd) == -1){
+        perror("Error close()");
+    }
+
     return 0;
 }
