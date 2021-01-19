@@ -30,12 +30,22 @@ int main(int argc, char *argv[]){
 
     if(rc != 0){
         perror("Error getaddrinfo()");
-        return -1;
+        exit(1);
     }
 
     int sd = socket(res->ai_family, res->ai_socktype, 0);
 
-    bind(sd, res->ai_addr, res->ai_addrlen);
+    if(sd == -1){
+        perror("Error socket()");
+        exit(1);
+    }
+
+    rc = bind(sd, res->ai_addr, res->ai_addrlen);
+
+    if(rc == -1){
+        perror("Error bind()");
+        exit(1);
+    }
 
     while(1){
         
@@ -46,6 +56,10 @@ int main(int argc, char *argv[]){
         socklen_t client_len = sizeof(struct sockaddr_storage);
 
         int bytes = recvfrom(sd, buf, 90, 0, (struct sockaddr *) &client_addr, &client_len);
+
+        if(bytes == -1){
+            perror("Error recvfrom()");
+        }
 
         buf[bytes]='\0';
 
@@ -71,12 +85,16 @@ int main(int argc, char *argv[]){
         switch (buf[0]){
             case 't':
                 bytes = strftime(buf, sizeof(buf), "%I:%M:%S %p\n", localt);
-                sendto(sd, buf, bytes, 0, (struct sockaddr *) &client_addr, client_len);
+                if(sendto(sd, buf, bytes, 0, (struct sockaddr *) &client_addr, client_len) == -1){
+                    perror("Error sendto()");
+                }
                 break;
 
             case 'd':
                 bytes = strftime(buf, sizeof(buf), "%F\n", localt);
-                sendto(sd, buf, bytes, 0, (struct sockaddr *) &client_addr, client_len);
+                if(sendto(sd, buf, bytes, 0, (struct sockaddr *) &client_addr, client_len) == -1){
+                    perror("Error sendto()");
+                }
                 break;
 
             case 'q':
